@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 class AzureAIService:
     MODEL_CONFIGS = {
         "deepseek": {
-            "endpoint": keyvault.get_secret("AZURE_DEEPSEEK_ENDPOINT"),  # Remove /v1/chat/completions
+            "endpoint": "https://deepsk.eastus.models.ai.azure.com",  # Remove /v1/chat/completions
             "client_type": "inference",
             "key_name": "azure-api-deep-key",
             "description": "Advanced reasoning and problem-solving capabilities",
@@ -24,8 +24,8 @@ class AzureAIService:
             }
         },
         "gpt4": {
-            "endpoint": keyvault.get_secret("AZURE_GPT_ENDPOINT"),
-            "deployment": "gpt-4",
+            "endpoint": "https://az-kpopenai.openai.azure.com",
+            "deployment": "gpt-4o",
             "client_type": "openai",
             "key_name": "azure-api-gpt-key",
             "description": "Powerful model for complex tasks and reasoning",
@@ -39,7 +39,7 @@ class AzureAIService:
             }
         },
         "phi": {
-            "endpoint": keyvault.get_secret("AZURE_PHI_ENDPOINT"),  # Remove /v1/chat/completions
+            "endpoint": "https://phi3.swedencentral.models.ai.azure.com",  # Remove /v1/chat/completions
             "client_type": "inference",
             "key_name": "azure-api-phi-key",
             "description": "Efficient model for general tasks",

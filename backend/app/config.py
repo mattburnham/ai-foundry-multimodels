@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings
 from functools import lru_cache
 from azure.keyvault.secrets import SecretClient
 from azure.identity import ManagedIdentityCredential
+from azure.identity import DefaultAzureCredential
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -15,6 +16,11 @@ class Settings(BaseSettings):
     # Key Vault configurations
     KEY_VAULT_URL: str
     MANAGED_IDENTITY_CLIENT_ID: str
+   
+    # Azure AI Foundry Agent
+    AZURE_AI_PROJECT_CONNECTION_STRING: str = ""
+    STATS_AGENT_ID: str = ""
+    MODEL_DEPLOYMENT_NAME: str = "gpt-4o"
    
     # CORS configurations
     BACKEND_CORS_ORIGINS: list[str] = ["*"]
@@ -52,12 +58,12 @@ class KeyVaultSettings:
                 self._secrets[secret_name] = secret.value
             return self._secrets[secret_name]
         except Exception as e:
-            logger.error("Failed to get secret. An error occurred.")
+            logger.error(f"Failed to get secret {secret_name}: {str(e)}")
             raise
 
 @lru_cache()
 def get_settings() -> Settings:
-    return Settings(_env_file=None)
+    return Settings()
 
 @lru_cache()
 def get_keyvault_settings() -> KeyVaultSettings:

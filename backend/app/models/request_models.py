@@ -29,3 +29,29 @@ class GenerateResponse(BaseModel):
         default=None,
         description="Token usage information"
     )
+
+class AnalyzeStatsRequest(BaseModel):
+    stats_data: Dict = Field(..., description="Model statistics data")
+    question: Optional[str] = Field(
+        default="Analyze these statistics and provide insights on performance and cost efficiency",
+        description="Optional specific question about the stats"
+    )
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "stats_data": {
+                    "gpt4": {
+                        "count": 5,
+                        "totalResponseTime": 12.5,
+                        "totalTokensPerSecond": 125.5,
+                        "totalTokens": 1500
+                    }
+                },
+                "question": "Which model is most cost-effective?"
+            }
+        }
+
+class AnalyzeStatsResponse(BaseModel):
+    analysis: str = Field(..., description="Agent's analysis and insights")
+    agent_id: str = Field(..., description="ID of the agent that performed the analysis")
