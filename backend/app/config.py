@@ -58,7 +58,7 @@ class KeyVaultSettings:
                 self._secrets[secret_name] = secret.value
             return self._secrets[secret_name]
         except Exception as e:
-            logger.error(f"Failed to get secret {secret_name}: {str(e)}")
+            logger.error(f"Failed to retrieve secret from KeyVault: {str(e)}")
             raise
 
 @lru_cache()
